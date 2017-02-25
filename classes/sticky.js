@@ -3,7 +3,7 @@
  *
  * @description     Plain javaScript sticky navigation
  * @author          LupusCoding <https://github.com/LupusCoding/>
- * @version         0.1.1
+ * @version         0.2.0
  */
 class Sticky {
 	/*
@@ -16,6 +16,14 @@ class Sticky {
 	 * ST.setStyle('border', '1px dotted red');
 	 * ST.init();
 	 */
+
+	 /****************/
+	 /* Main Section */
+	 /****************/
+
+	 /**
+	  * constructor
+	  */
 	constructor() {
 		this.selector = 'js-toggle-nav';
 		this.attributeToSelect = 'id';
@@ -77,22 +85,36 @@ class Sticky {
 			}
 		};
 
+		/* start scroll handling */
 		this.init 			= function() { this._start() };
 
+		/* select navigation by id */
 		this.getById 		= function() { this._selectById() };
+		/* select navigation by class */
 		this.getByClass 	= function() { this._selectByClass() };
+		/* select navigation by name */
 		this.getByName		= function() { this._selectByName() };
+		/* select navigation by custom attribute */
 		this.getByAttribute = function(attribute) { return this.selectByAttribute(attribute) };
 
+		/* center sticky navigation */
 		this.center 		= function() { return this._setCenter() };
+		/* maximize sticky navigation */
 		this.maximize 		= function() { return this._maximizeElement() };
 
+		/* set temporary style for sticky nav */
 		this.setStyle 		= function(style, value) { return this._setStyle(style, value) };
+		/* get specific style from sticky nav */
 		this.getStyle 		= function(style) { return this._getStyle(style) };
+		/* unset specific style from sticky nav */
 		this.unsetStyle 	= function(style) { return this._unsetStyle(style) };
 	}
 
-	/* listener */
+	/**
+	 * scroll and offset handling
+	 *
+	 * @return void
+	 */
 	_start() {
 		var self 	= this;
 		var select 	= 'undefined';
@@ -136,22 +158,46 @@ class Sticky {
 		});
 	}
 
-	/* select navigation by ? */
+	 /*********************/
+	 /* Selection Section */
+	 /*********************/
+
+	/**
+	 * select navigation by id
+	 *
+	 * @return bool true
+	 */
 	_selectById() {
 		this.attributeToSelect = 'id';
 		return true;
 	}
 
+	/**
+	 * select navigation by class
+	 *
+	 * @return bool true
+	 */
 	_selectByClass() {
 		this.attributeToSelect = 'class';
 		return true;
 	}
 
+	/**
+	 * select navigation by name
+	 *
+	 * @return bool true
+	 */
 	_selectByName() {
 		this.attributeToSelect = 'name';
 		return true;
 	}
 
+	/**
+	 * select navigation by custom attribute
+	 *
+	 * @param string attr
+	 * @return bool
+	 */
 	_selectByAttribute(attr) {
 		if(typeof attr == 'undefined') {
 			return false;
@@ -160,7 +206,16 @@ class Sticky {
 		return true;
 	}
 
-	/* style controls */
+	 /*****************/
+	 /* Style Section */
+	 /*****************/
+
+	 /**
+	  * save original navigation style
+	  *
+	  * @param object elm Navigation element
+	  * @return void
+	  */
 	_setOrigStyles(elm) {
 		this.styles.original.display 			= elm.style.display;
 		this.styles.original.position 			= elm.style.position;
@@ -180,6 +235,13 @@ class Sticky {
 		this.styles.original.marginBottom 		= elm.style.marginBottom;
 	}
 
+	/**
+	 * set custom style for sticky nav
+	 *
+	 * @param string style
+	 * @param string value
+	 * @return bool
+	 */
 	_setStyle(style, value) {
 		if(typeof style != 'undefined' && typeof value != 'undefined') {
 			if(typeof this.styles.custom[style] != 'undefined') {
@@ -190,6 +252,12 @@ class Sticky {
 		return false;
 	}
 
+	/**
+	 * unset custom style
+	 *
+	 * @param string style
+	 * @return bool
+	 */
 	_unsetStyle(style) {
 		if(typeof style != 'undefined' && typeof this.styles.custom[style] != 'undefined') {
 			this.styles.custom[style] = null;
@@ -198,6 +266,12 @@ class Sticky {
 		return false;
 	}
 
+	/**
+	 * get specific custom style
+	 *
+	 * @param string style
+	 * @return bool
+	 */
 	_getStyle(style) {
 		if(typeof style != 'undefined' && typeof this.styles.custom[style] != 'undefined') {
 			return this.styles.custom[style];
@@ -205,10 +279,21 @@ class Sticky {
 		return false;
 	}
 
+	/**
+	 * choose to center sticky navigation
+	 *
+	 * @return void
+	 */
 	_setCenter() {
 		this.center = true;
 	}
 
+	/**
+	 * set style to center sticky navigation
+	 *
+	 * @param object elm
+	 * @return void
+	 */
 	_centerElement(elm) {
 		this.styles.custom.left 		 = '50%';
 		this.styles.custom.marginLeft = '-'+(elm.offsetWidth / 2)+'px';
@@ -220,7 +305,16 @@ class Sticky {
 	}
 
 
-	/* prepare navigation */
+	 /*******************/
+	 /* Prepare Section */
+	 /*******************/
+
+	 /**
+	  * set navigation sticky
+	  *
+	  * @param object elm
+	  * @return void
+	  */
 	_stickNav(elm) {
 		elm.style.display 				= this.styles.default.display;
 		if(this.styles.custom.display != null) {
@@ -288,6 +382,12 @@ class Sticky {
 		}
 	}
 
+	/**
+	 * set navigation back to normal
+	 *
+	 * @param object elm
+	 * @return void
+	 */
 	_unstickNav(elm) {
 		elm.style.display 			= this.styles.original.display;
 		elm.style.position 			= this.styles.original.position;
