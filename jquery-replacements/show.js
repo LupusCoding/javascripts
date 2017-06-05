@@ -1,3 +1,8 @@
+/*
+ * example (show all p-elements) :
+ * show('p');
+ *
+ */
 function show(selector) {
     var matches = document.querySelectorAll(selector);
 

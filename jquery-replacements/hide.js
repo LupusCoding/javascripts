@@ -1,3 +1,8 @@
+/*
+ * example (hide all p-elements) :
+ * hide('p')
+ *
+ */
 function hide(selector) {
     var matches[] = document.querySelectorAll(selector);
 

@@ -1,6 +1,16 @@
+/*
+ * example (get all li-elements of ul with id "my_list") :
+ * children(
+ *     document.getElementById('my_list'),
+ *     function(el) { 
+ *         return (typeof el.tagName != 'undefined' && el.tagName.toLowerCase() == 'li') 
+ *     }
+ * )
+ *
+ */
 function children(el, filter) {
     var childs = [];
-    el = el.parentNode.firstChild;
+    el = el.firstChild;
 
     do {
         if(!filter || filter(el)) {
